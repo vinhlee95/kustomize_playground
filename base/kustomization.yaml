@@ -1,0 +1,4 @@
+# Enumerate a set of resources
+# some customisations will be applied to them
+resources:
+  - deployment.yaml
