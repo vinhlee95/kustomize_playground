@@ -1,0 +1,10 @@
+namePrefix: staging-
+commonLabels:
+  variant: staging
+
+resources:
+- ../../base
+
+
+patches:
+- configmap.yaml
