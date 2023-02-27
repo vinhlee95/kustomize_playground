@@ -1,10 +1,25 @@
+# Add staging-prefix to names of all resources
 namePrefix: staging-
 commonLabels:
   variant: staging
 
+# Link to the base kustomization
 resources:
 - ../../base
 
-
 patches:
-- configmap.yaml
+  # Path Strategic Merge patch
+  # https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patches/#patch-using-path-strategic-merge
+  - path: configmap.yaml
+  - path: deployment.yaml
+
+  # Inline JSON patch
+  # https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patches/#patch-using-inline-json6902
+  # Patch Ingress host
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: staging.domain.com
+    target:
+      kind: Ingress
+      name: ingress
